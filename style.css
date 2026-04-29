@@ -1,0 +1,236 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* BACKGROUND */
+body {
+    height: 100vh;
+    background: url('wp10902817.jpg') no-repeat center center/cover;
+}
+
+/* HEADER */
+header {
+    position: fixed;
+    width: 100%;
+    padding: 20px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.logo {
+    color: white;
+    font-size: 2em;
+}
+
+/* NAV */
+.navigation {
+    display: flex;
+    align-items: center;
+}
+
+.navigation a,
+.btnLogin {
+    color: white;
+    margin-left: 30px;
+    text-decoration: none;
+    font-size: 1em;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.navigation a:hover,
+.btnLogin:hover {
+    text-decoration: underline;
+}
+
+/* POPUP WRAPPER */
+.wrapper {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+    width: 350px;
+    background: white;
+    border-radius: 10px;
+    padding: 25px;
+
+    display: none; /* 🔥 MAIN FIX */
+    z-index: 2000;
+    box-shadow: 0 0 25px rgba(0,0,0,0.5);
+}
+
+/* CLOSE BUTTON */
+.close-btn {
+    position: absolute;
+    right: 12px;
+    top: 8px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* FORM */
+.form-box {
+    display: none;
+}
+
+.form-box.active {
+    display: block;
+}
+
+.form-box h2 {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+/* INPUT */
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #aaa;
+    border-radius: 5px;
+}
+
+/* CHECKBOX */
+.check {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    margin: 10px 0;
+}
+
+.check input {
+    width: auto;
+}
+
+/* ROW */
+.row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* BUTTON (ONLY FORM BUTTONS) */
+.form-box button {
+    width: 100%;
+    padding: 10px;
+    background: black;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* TEXT */
+p {
+    text-align: center;
+    margin-top: 10px;
+}
+
+/* CONTAINER */
+.container {
+    padding: 120px 50px 50px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+/* CARD */
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    min-width: 300px;
+    max-width: 400px;
+}
+
+.card h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.card input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.card button {
+    width: 100%;
+    padding: 12px;
+    background: #333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.card button:hover {
+    background: #555;
+}
+
+.card p {
+    text-align: center;
+    margin-top: 15px;
+    color: #666;
+}
+
+.card a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.card a:hover {
+    text-decoration: underline;
+}
+
+/* TABLE */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+table th,
+table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+table th {
+    background: #333;
+    color: white;
+}
+
+table tr:hover {
+    background: #f5f5f5;
+}
+
+table .btn-edit {
+    color: #28a745;
+    margin-right: 10px;
+}
+
+table .btn-delete {
+    color: #dc3545;
+}
