@@ -1,17 +1,15 @@
 <?php
-/**
- * Index - Login & Registration Page
- */
 session_start();
 include "db.php";
 
-// LOGIN
 if (isset($_POST['login'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    $sql = "SELECT * FROM users WHERE email='$email' AND password='$password'";
-    $result = $conn->query($sql);
+    $stmt = $conn->prepare("SELECT * FROM users WHERE email = ? AND password = ?");
+    $stmt->bind_param("ss", $email, $password);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
         $_SESSION['email'] = $email;
@@ -20,22 +18,23 @@ if (isset($_POST['login'])) {
     } else {
         echo "<script>alert('Invalid Email or Password');</script>";
     }
+    $stmt->close();
 }
 
-// REGISTER
 if (isset($_POST['register'])) {
     $username = $_POST['username'];
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    $sql = "INSERT INTO users (username, email, password) 
-            VALUES ('$username', '$email', '$password')";
+    $stmt = $conn->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");
+    $stmt->bind_param("sss", $username, $email, $password);
 
-    if ($conn->query($sql)) {
-        echo "<script>alert('Registered Successfully');</script>";
+    if ($stmt->execute()) {
+        echo "<script>alert('Registered Successfully. Now Login');</script>";
     } else {
-        echo "<script>alert('Registration Failed');</script>";
+        echo "<script>alert('Registration Failed. Email may already exist.');</script>";
     }
+    $stmt->close();
 }
 ?>
 
@@ -43,9 +42,8 @@ if (isset($_POST['register'])) {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login & Registration - Library System</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Library System</title>
+    <link rel="stylesheet" href="style.css?v=100">
 </head>
 <body>
 
@@ -57,21 +55,14 @@ if (isset($_POST['register'])) {
         <a href="#">About</a>
         <a href="#">Service</a>
         <a href="#">Contact</a>
-
-        <?php if (isset($_SESSION['email'])) { ?>
-            <a href="dashboard.php">Dashboard</a>
-            <a href="logout.php">Logout</a>
-        <?php } else { ?>
-            <button type="button" class="btnLogin">Login</button>
-        <?php } ?>
+        <button type="button" class="btnLogin">Login</button>
     </nav>
 </header>
 
-<div class="wrapper">
+<div class="wrapper" style="display:none;">
 
     <span class="close-btn">×</span>
 
-    <!-- LOGIN -->
     <div class="form-box login active">
         <h2>Login</h2>
 
@@ -95,7 +86,6 @@ if (isset($_POST['register'])) {
         </form>
     </div>
 
-    <!-- REGISTER -->
     <div class="form-box register">
         <h2>Register</h2>
 
@@ -119,6 +109,6 @@ if (isset($_POST['register'])) {
 
 </div>
 
-<script src="script.js"></script>
+<script src="script.js?v=100"></script>
 </body>
 </html>

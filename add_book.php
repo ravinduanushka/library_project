@@ -1,30 +1,37 @@
 <?php
-/**
- * Add Book - Insert new book into database
- */
-$conn = new mysqli("localhost", "root", "", "library1");
+include "db.php";
 
 if (isset($_POST['submit'])) {
     $title = $_POST['title'];
     $author = $_POST['author'];
     $quantity = $_POST['quantity'];
 
-    $conn->query("INSERT INTO books (title, author, quantity)
-                  VALUES ('$title', '$author', '$quantity')");
+    $sql = "INSERT INTO books (title, author, quantity, available)
+            VALUES ('$title', '$author', '$quantity', '$quantity')";
+
+    if ($conn->query($sql)) {
+        echo "<script>alert('Book Added Successfully');</script>";
+    }
 }
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Book - Library System</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Add Book</title>
+    <link rel="stylesheet" href="style.css?v=100">
 </head>
 <body>
 
-<?php include 'header.php'; ?>
+<header>
+    <h2 class="logo">Library</h2>
+    <nav class="navigation">
+        <a href="dashboard.php">Dashboard</a>
+        <a href="add_book.php">Add Book</a>
+        <a href="view_books.php">View Books</a>
+        <a href="logout.php">Logout</a>
+    </nav>
+</header>
 
 <div class="container">
     <div class="card">

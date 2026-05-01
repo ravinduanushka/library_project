@@ -2,21 +2,24 @@
 /**
  * Register - User Registration Page
  */
+session_start();
 include "db.php";
 
+$message = "";
 if(isset($_POST['register'])){
     $u = $_POST['username'];
     $e = $_POST['email'];
     $p = $_POST['password'];
 
-    $sql = "INSERT INTO users (username,email,password)
-            VALUES ('$u','$e','$p')";
+    $stmt = $conn->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");
+    $stmt->bind_param("sss", $u, $e, $p);
 
-    if($conn->query($sql)){
-        echo "<script>alert('Registered Successfully');</script>";
+    if($stmt->execute()){
+        $message = "Registration successful! Please login.";
     } else {
-        echo "<script>alert('Registration Failed');</script>";
+        $message = "Registration failed. Username or email may already exist.";
     }
+    $stmt->close();
 }
 ?>
 
@@ -34,7 +37,11 @@ if(isset($_POST['register'])){
 
 <div class="container">
     <div class="card">
-        <h2>Register</h2>
+        <h2>📝 Register</h2>
+
+        <?php if ($message) { ?>
+            <p class="message"><?php echo $message; ?></p>
+        <?php } ?>
 
         <form method="POST">
             <input type="text" name="username" placeholder="Username" required>

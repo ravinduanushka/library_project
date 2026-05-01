@@ -5,19 +5,24 @@
 session_start();
 include "db.php";
 
+$error = "";
 if (isset($_POST['login'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    $sql = "SELECT * FROM users WHERE username='$username' AND password='$password'";
-    $result = $conn->query($sql);
+    $stmt = $conn->prepare("SELECT * FROM users WHERE username = ? AND password = ?");
+    $stmt->bind_param("ss", $username, $password);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        $_SESSION['username'] = $username;
+        $_SESSION['email'] = $username;
         header("Location: dashboard.php");
+        exit();
     } else {
-        echo "Invalid Username or Password!";
+        $error = "Invalid Username or Password!";
     }
+    $stmt->close();
 }
 ?>
 
@@ -35,7 +40,11 @@ if (isset($_POST['login'])) {
 
 <div class="container">
     <div class="card">
-        <h2>Login</h2>
+        <h2>🔐 Login</h2>
+
+        <?php if ($error) { ?>
+            <p class="message" style="background: #f8d7da; color: #721c24;"><?php echo $error; ?></p>
+        <?php } ?>
 
         <form method="POST">
             <input type="text" name="username" placeholder="Username" required>
@@ -49,13 +58,4 @@ if (isset($_POST['login'])) {
 
 </body>
 </html>
-    Username: <input type="text" name="username"><br><br>
-    Password: <input type="password" name="password"><br><br>
-
-    <button type="submit" name="login">Login</button>
-</form>
-
-<a href="register.php">Go to Register</a>
-
-</body>
 </html>

@@ -1,20 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Library System</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
 <header>
     <h2 class="logo">Library</h2>
 
     <nav class="navigation">
-        <a href="dashboard.php">Dashboard</a>
-        <a href="add_book.php">Add Book</a>
-        <a href="view_books.php">View Books</a>
-        <a href="logout.php">Logout</a>
+        <a href="#">Home</a>
+        <a href="#">About</a>
+        <a href="#">Service</a>
+        <a href="#">Contact</a>
+
+        <?php if (isset($_SESSION['email'])) { ?>
+            <a href="dashboard.php">Dashboard</a>
+            <a href="logout.php">Logout</a>
+        <?php } else { ?>
+            <button type="button" class="btnLogin" onclick="openPopup()">Login</button>
+        <?php } ?>
     </nav>
 </header>
+
+<script>
+function openPopup() {
+    var wrapper = document.getElementById('popupWrapper');
+    if (wrapper) {
+        wrapper.style.display = 'block';
+        showLogin();
+    }
+}
+
+function closePopup() {
+    var wrapper = document.getElementById('popupWrapper');
+    if (wrapper) {
+        wrapper.style.display = 'none';
+    }
+}
+
+function showRegister() {
+    event.preventDefault();
+    document.getElementById('loginForm').classList.remove('active');
+    document.getElementById('registerForm').classList.add('active');
+}
+
+function showLogin() {
+    if (event) event.preventDefault();
+    document.getElementById('registerForm').classList.remove('active');
+    document.getElementById('loginForm').classList.add('active');
+}
+</script>

@@ -8,30 +8,24 @@ const registerForm = document.querySelector('.register');
 const goRegister = document.querySelector('.goRegister');
 const goLogin = document.querySelector('.goLogin');
 
-// open popup
-if (btnLogin) {
-    btnLogin.onclick = () => {
-        wrapper.style.display = "block";
-        loginForm.classList.add('active');
-        registerForm.classList.remove('active');
-    };
-}
+btnLogin.addEventListener("click", () => {
+    wrapper.style.display = "block";
+    loginForm.classList.add("active");
+    registerForm.classList.remove("active");
+});
 
-// close popup
-closeBtn.onclick = () => {
+closeBtn.addEventListener("click", () => {
     wrapper.style.display = "none";
-};
+});
 
-// switch to register
-goRegister.onclick = (e) => {
+goRegister.addEventListener("click", (e) => {
     e.preventDefault();
-    loginForm.classList.remove('active');
-    registerForm.classList.add('active');
-};
+    loginForm.classList.remove("active");
+    registerForm.classList.add("active");
+});
 
-// switch to login
-goLogin.onclick = (e) => {
+goLogin.addEventListener("click", (e) => {
     e.preventDefault();
-    registerForm.classList.remove('active');
-    loginForm.classList.add('active');
-};
+    registerForm.classList.remove("active");
+    loginForm.classList.add("active");
+});
