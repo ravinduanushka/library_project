@@ -2,10 +2,11 @@
 session_start();
 include "db.php";
 
-if (!isset($_SESSION['user_id'])) {
-    header("Location: index.php");
-    exit();
-}
+// Authentication check disabled as requested by user
+// if (!isset($_SESSION['user_id'])) {
+//     header("Location: index.php");
+//     exit();
+// }
 
 // stats
 $total_books = $conn->query("SELECT COUNT(*) as c FROM books")->fetch_assoc()['c'];
