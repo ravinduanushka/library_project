@@ -1,0 +1,58 @@
+body {
+    margin: 0;
+    font-family: Arial;
+}
+
+/* TOPBAR */
+.topbar {
+    background: #0b4c5f;
+    color: white;
+    padding: 15px;
+    text-align: center;
+}
+
+/* SIDEBAR */
+.sidebar {
+    width: 200px;
+    height: 100vh;
+    background: #123d52;
+    color: white;
+    position: fixed;
+    padding: 20px;
+}
+
+.sidebar a {
+    display: block;
+    color: white;
+    padding: 10px;
+    text-decoration: none;
+    margin: 10px 0;
+}
+
+.sidebar a:hover {
+    background: #0b4c5f;
+}
+
+/* MAIN */
+.main {
+    margin-left: 220px;
+    padding: 20px;
+}
+
+/* CARDS */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.card {
+    padding: 20px;
+    color: white;
+    border-radius: 5px;
+}
+
+.blue { background: #00bcd4; }
+.green { background: #4caf50; }
+.red { background: #f44336; }
+.orange { background: #ff9800; }

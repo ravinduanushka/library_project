@@ -1,8 +1,4 @@
 <?php
-/**
- * 
- * Database Connection
- */
 $conn = new mysqli("localhost", "root", "", "library1");
 
 if ($conn->connect_error) {

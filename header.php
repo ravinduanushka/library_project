@@ -1,46 +1,52 @@
-<header>
-    <h2 class="logo">Library</h2>
+<?php // header.php ?>
+<style>
+    .global-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        padding: 15px 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 1000;
+        box-sizing: border-box;
+    }
+    .global-header .brand {
+        color: white;
+        font-size: 24px;
+        font-weight: bold;
+        text-decoration: none;
+    }
+    .global-header nav {
+        display: flex;
+        align-items: center;
+    }
+    .global-header nav a {
+        color: white;
+        text-decoration: none;
+        margin-left: 20px;
+        font-size: 16px;
+    }
+    .global-header nav a:hover {
+        text-decoration: underline;
+    }
+    /* Add padding to body to prevent content from hiding under fixed header */
+    body {
+        padding-top: 60px; 
+    }
+</style>
 
-    <nav class="navigation">
-        <a href="#">Home</a>
-        <a href="#">About</a>
-        <a href="#">Service</a>
-        <a href="#">Contact</a>
-
-        <?php if (isset($_SESSION['email'])) { ?>
-            <a href="dashboard.php">Dashboard</a>
-            <a href="logout.php">Logout</a>
-        <?php } else { ?>
-            <button type="button" class="btnLogin" onclick="openPopup()">Login</button>
+<header class="global-header">
+    <a href="index.php" class="brand">Library</a>
+    <nav>
+        <a href="add_book.php">➕ Add Book</a>
+        <a href="view_books.php">📖 View Books</a>
+        <a href="index.php">🔑 Login</a>
+        <a href="register.php">📝 Register</a>
+        <?php if (isset($_SESSION['user_id'])) { ?>
+            <a href="logout.php">🚪 Logout</a>
         <?php } ?>
     </nav>
 </header>
-
-<script>
-function openPopup() {
-    var wrapper = document.getElementById('popupWrapper');
-    if (wrapper) {
-        wrapper.style.display = 'block';
-        showLogin();
-    }
-}
-
-function closePopup() {
-    var wrapper = document.getElementById('popupWrapper');
-    if (wrapper) {
-        wrapper.style.display = 'none';
-    }
-}
-
-function showRegister() {
-    event.preventDefault();
-    document.getElementById('loginForm').classList.remove('active');
-    document.getElementById('registerForm').classList.add('active');
-}
-
-function showLogin() {
-    if (event) event.preventDefault();
-    document.getElementById('registerForm').classList.remove('active');
-    document.getElementById('loginForm').classList.add('active');
-}
-</script>

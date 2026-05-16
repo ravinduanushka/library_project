@@ -1,34 +1,62 @@
 <?php
 session_start();
-if (!isset($_SESSION['email'])) {
+include "db.php";
+
+if (!isset($_SESSION['user_id'])) {
     header("Location: index.php");
     exit();
 }
+
+// stats
+$total_books = $conn->query("SELECT COUNT(*) as c FROM books")->fetch_assoc()['c'];
+$total_users = $conn->query("SELECT COUNT(*) as c FROM users")->fetch_assoc()['c'];
+$issued_books = $conn->query("SELECT COUNT(*) as c FROM issued_books WHERE return_date IS NULL")->fetch_assoc()['c'];
+$fine = 150; // demo value
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Dashboard</title>
-    <link rel="stylesheet" href="style.css?v=100">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LMS Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .page-container { padding: 25px; background: rgba(255,255,255,0.9); margin: 20px; border-radius: 8px; }
+        .dashboard-header { margin-bottom: 30px; font-size: 24px; color: #333; font-weight: bold; }
+    </style>
 </head>
 <body>
 
-<header>
-    <h2 class="logo">Library</h2>
-    <nav class="navigation">
-        <a href="dashboard.php">Dashboard</a>
-        <a href="add_book.php">Add Book</a>
-        <a href="view_books.php">View Books</a>
-        <a href="logout.php">Logout</a>
-    </nav>
-</header>
+<?php include "header.php"; ?>
 
-<div class="container">
-    <div class="card">
-        <h2>Dashboard</h2>
-        <p>Welcome to Library System</p>
-        <p><?php echo $_SESSION['email']; ?></p>
+<div class="page-container">
+    <div class="dashboard-header">Dashboard Overview</div>
+
+    <div class="cards">
+        <div class="box cyan">
+            <h2><?php echo $total_users; ?></h2>
+            <p>Members</p>
+            <span>👥</span>
+        </div>
+
+        <div class="box green">
+            <h2><?php echo $issued_books; ?></h2>
+            <p>Issued Books</p>
+            <span>📖</span>
+        </div>
+
+        <div class="box red">
+            <h2><?php echo $total_books; ?></h2>
+            <p>Total Books</p>
+            <span>📚</span>
+        </div>
+
+        <div class="box orange">
+            <h2>$<?php echo $fine; ?></h2>
+            <p>Pending Fines</p>
+            <span>💰</span>
+        </div>
     </div>
 </div>
 

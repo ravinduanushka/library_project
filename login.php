@@ -1,6 +1,8 @@
 <?php
 /**
  * Login - User Login Page
+ * 
+ * DEPRECATED - Use index.php?page=login instead
  */
 session_start();
 include "db.php";
@@ -17,45 +19,15 @@ if (isset($_POST['login'])) {
 
     if ($result->num_rows > 0) {
         $_SESSION['email'] = $username;
-        header("Location: dashboard.php");
+        header("Location: index.php?page=dashboard");
         exit();
     } else {
         $error = "Invalid Username or Password!";
     }
     $stmt->close();
 }
+
+// Redirect to main index.php
+header("Location: index.php?page=login");
+exit();
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Library System</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-<?php include 'header.php'; ?>
-
-<div class="container">
-    <div class="card">
-        <h2>🔐 Login</h2>
-
-        <?php if ($error) { ?>
-            <p class="message" style="background: #f8d7da; color: #721c24;"><?php echo $error; ?></p>
-        <?php } ?>
-
-        <form method="POST">
-            <input type="text" name="username" placeholder="Username" required>
-            <input type="password" name="password" placeholder="Password" required>
-            <button type="submit" name="login">Login</button>
-        </form>
-
-        <p>Don't have an account? <a href="register.php">Register</a></p>
-    </div>
-</div>
-
-</body>
-</html>
-</html>
