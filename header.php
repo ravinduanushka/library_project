@@ -41,12 +41,12 @@
 <header class="global-header">
     <a href="index.php" class="brand">Library</a>
     <nav>
-        <a href="add_book.php">➕ Add Book</a>
-        <a href="view_books.php">📖 View Books</a>
-        <a href="index.php">🔑 Login</a>
-        <a href="register.php">📝 Register</a>
+        <a href="add_book.php"> Add Book</a>
+        <a href="view_books.php"> View Books</a>
+        <a href="index.php"> Login</a>
+        <a href="register.php">Register</a>
         <?php if (isset($_SESSION['user_id'])) { ?>
-            <a href="logout.php">🚪 Logout</a>
+            <a href="logout.php"> Logout</a>
         <?php } ?>
     </nav>
 </header>
