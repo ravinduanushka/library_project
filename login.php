@@ -1,33 +1,40 @@
 <?php
-/**
- * Login - User Login Page
- * 
- * DEPRECATED - Use index.php?page=login instead
- */
 session_start();
 include "db.php";
 
-$error = "";
 if (isset($_POST['login'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    $stmt = $conn->prepare("SELECT * FROM users WHERE username = ? AND password = ?");
-    $stmt->bind_param("ss", $username, $password);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    $sql = "SELECT * FROM users WHERE username='$username' AND password='$password'";
+    $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
-        $_SESSION['email'] = $username;
-        header("Location: index.php?page=dashboard");
-        exit();
+        $_SESSION['username'] = $username;
+        header("Location: dashboard.php");
     } else {
-        $error = "Invalid Username or Password!";
+        echo "Invalid Username or Password!";
     }
-    $stmt->close();
 }
-
-// Redirect to main index.php
-header("Location: index.php?page=login");
-exit();
 ?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+</head>
+<body>
+
+<h2>Login</h2>
+
+<form method="POST">
+    Username: <input type="text" name="username"><br><br>
+    Password: <input type="password" name="password"><br><br>
+
+    <button type="submit" name="login">Login</button>
+</form>
+
+<a href="register.php">Go to Register</a>
+
+</body>
+</html>
