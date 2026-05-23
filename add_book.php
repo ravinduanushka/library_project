@@ -1,10 +1,10 @@
 <?php
 // add_book.php
-include "auth.php"; // ආරක්ෂිත සෙෂන් වැටකඩ (Session Gateway)
+include "auth.php"; 
 include "db.php";   // දත්ත සමුදාය සම්බන්ධතාවය (Port: 3307)
 
 $message = "";
-$msg_class = "";
+$message_type = "";
 
 if (isset($_POST['add_book'])) {
     $title = trim($_POST['title']);
@@ -19,24 +19,24 @@ if (isset($_POST['add_book'])) {
         $stmt = $conn->prepare("INSERT INTO books (title, author, quantity, available) VALUES (?, ?, ?, ?)");
         if ($stmt === false) {
             $message = "Prepare Error: " . htmlspecialchars($conn->error);
-            $msg_class = "error-msg";
+            $message_type = "error";
         } else {
             $stmt->bind_param("ssii", $title, $author, $quantity, $available);
             
             if ($stmt->execute()) {
                 $message = "✅ Book registered successfully!";
-                $msg_class = "success-msg";
+                $message_type = "success";
                 // Clear form fields after successful submission
                 $_POST = array();
             } else {
                 $message = "Execute Error: " . htmlspecialchars($stmt->error);
-                $msg_class = "error-msg";
+                $message_type = "error";
             }
             $stmt->close();
         }
     } else {
         $message = "⚠️ Please fill all fields correctly! Title and Author required, Quantity must be greater than 0.";
-        $msg_class = "error-msg";
+        $message_type = "error";
     }
 }
 ?>
@@ -49,7 +49,6 @@ if (isset($_POST['add_book'])) {
     <title>Add New Book - Library System</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Dashboard එකට සමාන නිල්, කොළ, රතු පසුබිම් පින්තූරය ලෝඩ් කරවීම */
         html, body {
             margin: 0 !important;
             padding: 0 !important;
@@ -57,85 +56,89 @@ if (isset($_POST['add_book'])) {
             font-family: Arial, sans-serif;
         }
 
-        /* Dashboard එකේ විදිහටම ප්‍රධාන Container එක විනිවිද පෙනෙන සේ සකස් කිරීම */
         .page-container { 
-            padding: 30px; 
-            background: rgba(255, 255, 255, 0.5) !important; /* 50% විනිවිදභාවය */
+            padding: 25px; 
+            background: rgba(255, 255, 255, 0.5) !important; 
             margin: 20px; 
             border-radius: 8px; 
-            backdrop-filter: blur(8px) !important; 
-            -webkit-backdrop-filter: blur(8px) !important;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1) !important;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05) !important;
         }
         
         .page-header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
             margin-bottom: 25px; 
-            border-bottom: 2px solid rgba(0,0,0,0.1); 
+            border-bottom: 2px solid #eee; 
             padding-bottom: 15px; 
         }
-        .page-header h1 { margin: 0; font-size: 26px; color: #222; font-weight: bold; }
+        .page-header h1 { margin: 0; font-size: 26px; color: #333; font-weight: bold; }
 
         /* Form Card Layout */
         .form-card {
-            background: rgba(255, 255, 255, 0.8) !important;
+            background: white !important;
             padding: 30px;
             border-radius: 8px;
             max-width: 500px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            border: 1px solid rgba(255,255,255,0.3);
+            margin: 20px auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08) !important;
+            border: 1px solid #eaeaea;
         }
         
         .form-group { text-align: left; margin-bottom: 20px; }
-        .form-group label { display: block; margin-bottom: 8px; font-weight: bold; color: #333; font-size: 14px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: bold; color: #444; font-size: 14px; }
         
-        /* Input Fields හැඩගැන්වීම් */
         .form-group input { 
             width: 100%; 
-            padding: 12px; 
+            padding: 12px 15px; 
             border: 1px solid #ccc; 
-            border-radius: 6px; 
-            box-sizing: border-box; 
+            border-radius: 4px; 
             font-size: 15px;
+            margin: 0;
+            box-sizing: border-box;
             background: #fff;
         }
-        .form-group input:focus { border-color: #007bff; outline: none; }
+        .form-group input:focus { 
+            border-color: #007bff; 
+            outline: none; 
+            box-shadow: 0 0 5px rgba(0,123,255,0.25);
+        }
         
-        /* Submit Button එක කළු පැහැයෙන් */
         .btn-submit { 
             width: 100%; 
-            background: #222; 
+            background-color: #28a745; 
             color: white; 
             border: none; 
-            padding: 12px; 
-            border-radius: 6px; 
+            padding: 12px 20px; 
+            border-radius: 4px; 
             cursor: pointer; 
             font-size: 16px; 
             font-weight: bold;
             transition: background 0.2s;
         }
-        .btn-submit:hover { background: #000; }
+        .btn-submit:hover { background-color: #218838; }
         
-        /* నిවేదన సందేశాలు (Alert Messages) */
-        .success-msg { 
-            background: #d4edda; 
-            color: #155724; 
-            padding: 15px; 
-            border-radius: 6px; 
-            margin-bottom: 20px; 
-            font-size: 15px; 
+        /* Alert Messages */
+        .alert {
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-size: 15px;
+            font-weight: 500;
+        }
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
             border: 1px solid #c3e6cb;
-            font-weight: 500;
         }
-        .error-msg { 
-            background: #f8d7da; 
-            color: #721c24; 
-            padding: 15px; 
-            border-radius: 6px; 
-            margin-bottom: 20px; 
-            font-size: 15px; 
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
             border: 1px solid #f5c6cb;
-            font-weight: 500;
         }
+
+        .btn-secondary { background: #6c757d; color: white; padding: 8px 15px; border-radius: 4px; text-decoration: none; font-size: 14px; }
+        .btn-secondary:hover { background: #5a6268; }
     </style>
 </head>
 <body>
@@ -148,13 +151,17 @@ if (isset($_POST['add_book'])) {
     <div class="page-container" style="flex:1;">
         <div class="page-header">
             <h1>Register New Book Asset</h1>
+            <a href="dashboard.php" class="btn-secondary">← Back to Dashboard</a>
         </div>
 
-        <div class="form-card">
-            <?php if (!empty($message)): ?>
-                <div class="<?php echo $msg_class; ?>"><?php echo $message; ?></div>
-            <?php endif; ?>
+        <?php if (!empty($message)): ?>
+            <div class="alert alert-<?php echo $message_type; ?>">
+                <?php echo $message; ?>
+            </div>
+        <?php endif; ?>
 
+        <div class="form-card">
+            <h3 style="margin-top:0; margin-bottom: 20px; text-align: center; color: #333;">Enter Book Details</h3>
             <form method="POST" action="add_book.php">
                 <div class="form-group">
                     <label>Book Title</label>
@@ -177,5 +184,6 @@ if (isset($_POST['add_book'])) {
     </div>
 </div>
 
+<script src="script.js"></script>
 </body>
 </html>

@@ -68,7 +68,7 @@ if (isset($_POST['login'])) {
         }
 
         .login-card {
-            background: rgba(255, 255, 255, 0.65) !important;
+            background: rgba(255, 255, 255, 0.5) !important;
             padding: 40px;
             border-radius: 12px;
             width: 100%;

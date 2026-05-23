@@ -61,7 +61,7 @@ if (isset($_POST['return'])) {
             border-radius: 8px;
             max-width: 500px;
             margin: 20px auto;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.07);
             border: 1px solid #eaeaea;
         }
         
