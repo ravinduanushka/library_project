@@ -3,6 +3,14 @@
 include "auth.php"; 
 include "db.php";
 
+<<<<<<< HEAD
+=======
+// Authentication check disabled as requested by user
+// if (!isset($_SESSION['user_id'])) {
+//     header("Location: index.php");
+//     exit();
+// }
+>>>>>>> 4ed3586e3ee0475fd601c1a12a152900d2f5702d
 
 $total_books = $conn->query("SELECT COUNT(*) as c FROM books")->fetch_assoc()['c'];
 $total_users = $conn->query("SELECT COUNT(*) as c FROM users")->fetch_assoc()['c'];
