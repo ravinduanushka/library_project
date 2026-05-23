@@ -15,7 +15,7 @@ $result = $conn->query($query);
     <title>View Books - Library System</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        .page-container { padding: 25px; background: rgba(255,255,255,0.95); margin: 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .page-container { padding: 25px; background: rgba(255,255,255,0.5); margin: 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
         .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; border-bottom: 2px solid #eee; padding-bottom: 15px; }
         .page-header h1 { margin: 0; font-size: 26px; color: #333; }
         
@@ -53,11 +53,14 @@ $result = $conn->query($query);
 
 <?php include "header.php"; ?>
 
-<div class="page-container">
-    <div class="page-header">
-        <h1>Complete Book Inventory Stock</h1>
-        <a href="dashboard.php" class="btn-secondary">← Back to Dashboard</a>
-    </div>
+<div style="display:flex;">
+    <?php include "sidebar.php"; ?>
+
+    <div class="page-container" style="flex:1;">
+        <div class="page-header">
+            <h1>Complete Book Inventory Stock</h1>
+            <a href="dashboard.php" class="btn-secondary">← Back to Dashboard</a>
+        </div>
 
     <table class="data-table">
         <thead>
@@ -101,6 +104,7 @@ $result = $conn->query($query);
             <?php endif; ?>
         </tbody>
     </table>
+    </div>
 </div>
 
 <script src="script.js"></script>

@@ -5,11 +5,11 @@
     font-family: Arial;
 }
 
-/* BACKGROUND */
+
 body {
     min-height: 100vh;
-    background: url('wp10902817.jpg') no-repeat center center fixed;
-    background-size: cover;
+    background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url('27db861f-46ea-443e-8a13-6e9d4a54ec8b.png') no-repeat center center fixed !important;
+    background-size: cover !important;
 }
 
 /* NAVBAR */

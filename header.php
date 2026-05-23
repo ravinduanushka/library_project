@@ -1,25 +1,28 @@
 <?php
 // header.php
-// Global unified header navigation bar layout template
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 ?>
-<nav class="navbar" style="background: #333; padding: 15px 25px; display: flex; justify-content: space-between; align-items: center; color: white; font-family: sans-serif;">
-    <div class="nav-logo" style="font-size: 20px; font-weight: bold;">
+<nav class="navbar" style="background: rgba(51, 51, 51, 0.85); padding: 15px 25px; display: flex; justify-content: space-between; align-items: center; color: white; font-family: sans-serif; position: relative; z-index: 10; backdrop-filter: blur(5px); box-shadow: 0 2px 10px rgba(0,0,0,0.2);">
+    <div class="nav-logo" style="font-size: 20px; font-weight: bold; letter-spacing: 0.5px;">
         Library Management System
     </div>
     
-    <div class="nav-links">
-        <a href="dashboard.php" style="color: white; text-decoration: none; margin-left: 20px; font-size: 15px;">Dashboard</a>
-        <a href="add_book.php" style="color: white; text-decoration: none; margin-left: 20px; font-size: 15px;">Add Book</a>
-        <a href="view_books.php" style="color: white; text-decoration: none; margin-left: 20px; font-size: 15px;">View Books</a>
-        <a href="issue_book.php" style="color: white; text-decoration: none; margin-left: 20px; font-size: 15px;">Issue Book</a>
-        <a href="return_book.php" style="color: white; text-decoration: none; margin-left: 20px; font-size: 15px;">Return Book</a>
-        
-        <?php if (isset($_SESSION['username'])): ?>
-            <span style="color: #ffc107; margin-left: 25px; font-weight: bold;">[Admin: <?php echo htmlspecialchars($_SESSION['username']); ?>]</span>
-            <a href="logout.php" style="color: #ff4d4d; text-decoration: none; margin-left: 15px; font-weight: bold;">Logout</a>
+    <div class="nav-actions" style="display: flex; align-items: center; gap: 15px;">
+        <?php if (isset($_SESSION['user_id']) || isset($_SESSION['username'])): ?>
+            <?php if (isset($_SESSION['username'])): ?>
+                <span style="color: #ffc107; font-weight: bold; font-size: 14px; margin-right: 5px;">
+                    [Admin: <?php echo htmlspecialchars($_SESSION['username']); ?>]
+                </span>
+            <?php endif; ?>
+            <a href="logout.php" style="background-color: #dc3545; color: white; text-decoration: none; padding: 8px 16px; border-radius: 4px; font-weight: bold; font-size: 14px; transition: background 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
+                Logout
+            </a>
+        <?php else: ?>
+            <a href="login.php" style="background-color: #007bff; color: white; text-decoration: none; padding: 8px 16px; border-radius: 4px; font-weight: bold; font-size: 14px; transition: background 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
+                Login
+            </a>
         <?php endif; ?>
     </div>
 </nav>
